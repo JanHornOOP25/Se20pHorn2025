@@ -7,6 +7,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import business.Auto;
+import business.AutovermietungModel;
 import javafx.event.*;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -44,6 +45,9 @@ public class AutovermietungAnwendungssystem {
     
     // speichert temporaer ein Objekt vom Typ Auto
     private Auto auto;
+    
+    private AutovermietungView avView;
+    private AutovermietungModel avModel;
     
     public AutovermietungAnwendungssystem(Stage primaryStage){
     	Scene scene = new Scene(this.pane, 700, 340);

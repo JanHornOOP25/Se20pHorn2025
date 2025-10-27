@@ -6,7 +6,7 @@ public class AnwendungssystemControl {
 	private AnwendungssystemView anwView;
 	private AnwendungssystemModel anwModel;
 
-	public AnwendungssystemControl(Stage primaryStage ) {
+	public AnwendungssystemControl(Stage primaryStage) {
 		anwModel = new AnwendungssystemModel();
 		anwView = new AnwendungssystemView(this, anwModel,primaryStage);
 	}
