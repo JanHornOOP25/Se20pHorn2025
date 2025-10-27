@@ -12,12 +12,16 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 
-public class AnwendungssystemView extends Application {
+public class AnwendungssystemView  {
 	private AnwendungssystemControl anwControl;
 	private AnwendungssystemModel anwMod;
 
-	@Override
-	public void start(Stage primaryStage) throws Exception {
+
+
+	public AnwendungssystemView(AnwendungssystemControl anwControl, AnwendungssystemModel anwMod,Stage primaryStage) {
+		this.anwControl = anwControl;
+		this.anwMod = anwMod;
+		
 		this.grid.setAlignment(Pos.CENTER);
 		this.grid.setHgap(10);
 		this.grid.setVgap(10);
@@ -29,13 +33,6 @@ public class AnwendungssystemView extends Application {
         
 		this.initKomponenten();
 		this.initListener();
-		
-	}
-
-	public AnwendungssystemView(AnwendungssystemControl anwControl, AnwendungssystemModel anwMod, String[] args) {
-		this.anwControl = anwControl;
-		this.anwMod = anwMod;
-		launch(args);
 	}
 	
 	private GridPane grid = new GridPane();

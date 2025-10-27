@@ -1,12 +1,14 @@
 package anwendungssystem;
 
+import javafx.stage.Stage;
+
 public class AnwendungssystemControl {
 	private AnwendungssystemView anwView;
 	private AnwendungssystemModel anwModel;
 
-	public AnwendungssystemControl(String[] args) {
+	public AnwendungssystemControl(Stage primaryStage ) {
 		anwModel = new AnwendungssystemModel();
-		anwView = new AnwendungssystemView(this, anwModel,args);
+		anwView = new AnwendungssystemView(this, anwModel,primaryStage);
 	}
 	
 	public void schreibeInDatei(String text){
