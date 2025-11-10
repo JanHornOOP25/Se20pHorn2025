@@ -50,15 +50,11 @@ public class AutovermietungControl {
 			  
 	     void leseAusDatei(String typ){
 	    	try {
-	      		if("csv".equals(typ)){
-	      			avModel.lesAusDatei();
+	      		
+	      			avModel.lesAusDatei(typ);
 	      	  			avView.zeigeInformationsfensterAn(
 	      	  	   			"Das Auto wurde gelesen!");
-	      		}
-	       		else{
-	       			avView.zeigeInformationsfensterAn(
-		   				"Noch nicht implementiert!");
-		   		}
+	      		
 			}
 			catch(IOException exc){
 				avView.zeigeFehlermeldungsfensterAn(

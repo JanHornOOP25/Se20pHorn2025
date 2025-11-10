@@ -1,10 +1,10 @@
 package business;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+
+import filCreatorsHorn.*;
 
 public class AutovermietungModel {
 	private Auto auto;
@@ -24,11 +24,12 @@ public class AutovermietungModel {
 		return auto;
 	}
 
-	public void lesAusDatei() throws IOException {
-		BufferedReader ein = new BufferedReader(new FileReader("Auto.csv"));
-		String[] zeile = ein.readLine().split(";");
+	public void lesAusDatei(String typ) throws IOException {
+		ReaderCreatorHorn readercreator= new ConcreteReaderCreator();
+		ReaderProductHorn reader = readercreator.factoryMethod(typ);
+		String[] zeile = reader.leseAusDatei(); 
 		this.auto = new Auto(zeile[0], zeile[1], zeile[2], Float.parseFloat(zeile[3]), zeile[4].split("_"));
-		ein.close();
+		reader.schlisseDatei();
 
 	}
 
@@ -37,5 +38,7 @@ public class AutovermietungModel {
 		aus.write(auto.gibAutoZurueck(';'));
 		aus.close();
 	}
+
+
 
 }
