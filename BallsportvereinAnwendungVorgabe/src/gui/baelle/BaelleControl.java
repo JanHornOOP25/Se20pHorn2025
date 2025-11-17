@@ -9,7 +9,7 @@ public class BaelleControl {
 	private BaelleModel baelleModel;
 
 	public BaelleControl(Stage primaryStage){
-		this.baelleModel = new BaelleModel();
+		this.baelleModel = BaelleModel.getinstesns();
 		this.baelleView = new BaelleView(this, primaryStage, 
 			baelleModel);
 	}
@@ -18,7 +18,7 @@ public class BaelleControl {
 	   	try{
    			baelleModel.leseBaelleAusDatei();
    			baelleView.zeigeInformationsfensterAn(
-   				"Die Bälle wurden gelesen!");
+   				"Die Bï¿½lle wurden gelesen!");
 	    } 
 		catch(Exception exc){
 			baelleView.zeigeFehlermeldungsfensterAn("",

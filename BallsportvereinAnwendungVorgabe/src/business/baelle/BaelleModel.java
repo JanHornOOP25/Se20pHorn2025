@@ -1,12 +1,26 @@
 package business.baelle;
 
 import java.io.*;
+import java.util.Observable;
 
-public class BaelleModel {
+
+
+public class BaelleModel extends Observable {
  		
 	private Ball[] baelle = new Ball[100];
 	private int anzahlBaelle;
+	private static BaelleModel instesns = null;
 	
+	private BaelleModel() {
+		
+	}
+	public static BaelleModel getinstesns() {
+		if (instesns == null) {
+			instesns = new BaelleModel();
+		}
+		return instesns;
+		
+	}
 	public int getAnzahlBaelle() {
 		return anzahlBaelle;
 	}
@@ -51,6 +65,8 @@ public class BaelleModel {
 	   			zeile[1], zeile[2], zeile[3], zeile[4], 
 	   			Double.parseDouble(zeile[5]));
 	   	}
+	   	setChanged();
+	   	notifyObservers();
 	    ein.close();
  	}
 

@@ -1,5 +1,8 @@
 package gui.sportartikel;
 
+import java.util.Observable;
+import java.util.Observer;
+
 import business.baelle.*;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -11,7 +14,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import ownUtil.MeldungsfensterAnzeiger;
 
-public class SportartikelView {
+public class SportartikelView implements Observer {
 	
 	private SportartikelControl sportartikelControl;
   	private BaelleModel baelleModel;	
@@ -19,7 +22,7 @@ public class SportartikelView {
     //---Anfang Attribute der grafischen Oberflaeche---
     private Pane pane = new  Pane();
     private Label lblAnzeigeTrikots    		= new Label("Anzeige Trikots");
-    private Label lblAnzeigeBaelle          = new Label("Anzeige Bälle");
+    private Label lblAnzeigeBaelle          = new Label("Anzeige Bï¿½lle");
     private TextArea txtAnzeigeTrikots      = new TextArea();
     private TextArea txtAnzeigeBaelle       = new TextArea();  
     private Button btnAnzeigeBaelle         = new Button("Anzeige");
@@ -33,6 +36,7 @@ public class SportartikelView {
     	stage.show();
     	this.sportartikelControl = sportartikelControl;
     	this.baelleModel = baelleModel;
+    	this.baelleModel.addObserver(this);
 		this.initKomponenten();
 		this.initListener();
    	}
@@ -88,7 +92,13 @@ public class SportartikelView {
     private void zeigeInformationsfensterAn(String meldung){
  		new MeldungsfensterAnzeiger(AlertType.INFORMATION,
  			"Information", meldung).zeigeMeldungsfensterAn();
-    }	
+    }
+
+	@Override
+	public void update(Observable o, Object arg) {
+			zeigeBaelleAn();
+		
+	}	
     
 
 }
