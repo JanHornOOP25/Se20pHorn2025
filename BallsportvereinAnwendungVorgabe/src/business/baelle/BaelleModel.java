@@ -2,6 +2,14 @@ package business.baelle;
 
 import java.io.*;
 import java.util.Observable;
+import java.util.Vector;
+
+import javafx.event.EventHandler;
+import javafx.stage.WindowEvent;
+
+
+
+
 
 
 
@@ -10,6 +18,7 @@ public class BaelleModel extends Observable {
 	private Ball[] baelle = new Ball[100];
 	private int anzahlBaelle;
 	private static BaelleModel instesns = null;
+	public Vector<Observable> observers = new Vector<Observable>();
 	
 	private BaelleModel() {
 		
@@ -69,5 +78,22 @@ public class BaelleModel extends Observable {
 	   	notifyObservers();
 	    ein.close();
  	}
-
+	/*
+	@Override
+	public void addObserver(Observer observer) {
+		observers.add(observer);
+		
+	}
+	@Override
+	public void removeObserver(Observer observer) {
+		observers.remove(observer);
+		
+	}
+	@Override
+	public void notifyObserver() {
+		for(Observer obs : observers) {
+			obs.update();
+		}
+	*/
+	
 }
