@@ -1,4 +1,4 @@
-package gui;
+package gui.guiAutovermietung;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -7,19 +7,19 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import business.Auto;
-import business.AutovermietungModel;
+import business.AutosModel;
 import javafx.stage.Stage;
 
 public class AutovermietungControl {
 	 private AutovermietungView avView;
-	 private AutovermietungModel avModel;
+	 private AutosModel avModel;
 	 
 	 
 
 	 
 	  public AutovermietungControl(Stage primaryStage) {
 		super();
-		this.avModel = new AutovermietungModel();
+		this.avModel = avModel.getInstance();
 		this.avView =new  AutovermietungView(this, avModel, primaryStage);
 	}
 

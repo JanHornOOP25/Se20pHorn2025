@@ -1,26 +1,27 @@
-package gui;
-   
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+package gui.guiAutovermietung;
 
-import business.Auto;
 import business.AutosModel;
-import gui.guiAutovermietung.AutovermietungView;
-import javafx.event.*;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.SeparatorMenuItem;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import ownUtil.*;
+import ownUtil.MeldungsfensterAnzeiger;
+import ownUtil.Observer;
 
-public class AutovermietungAnwendungssystem {
-	  
-    //---Anfang Attribute der grafischen Oberflaeche---
+public class AutovermietungView implements Observer {
+	
+	//---Anfang Attribute der grafischen Oberflaeche---
     private Pane pane     					= new  Pane();
     private Label lblEingabe    	 		= new Label("Eingabe");
     private Label lblAnzeige   	 	    	= new Label("Anzeige");
@@ -29,12 +30,12 @@ public class AutovermietungAnwendungssystem {
     private Label lblModell  	 			= new Label("Modell:");
     private Label lblTagespreis   			= new Label("Tagespreis:");
     private Label lblVermietetVonBis  		= new Label("Vermietet von-bis:");
-    private TextField txtKennzeichen 	 	= new TextField();
-    private TextField txtTyp				= new TextField();
-    private TextField txtModell				= new TextField();
-    private TextField txtTagespreis			= new TextField();
-    private TextField txtVermietetVonBis		= new TextField();
-    private TextArea txtAnzeige  			= new TextArea();
+	TextField txtKennzeichen = new TextField();
+	TextField txtTyp = new TextField();
+	TextField txtModell = new TextField();
+	TextField txtTagespreis = new TextField();
+	TextField txtVermietetVonBis = new TextField();
+	TextArea txtAnzeige  			= new TextArea();
     private Button btnEingabe 		 		= new Button("Eingabe");
     private Button btnAnzeige 		 		= new Button("Anzeige");
     private MenuBar mnbrMenuLeiste  		= new MenuBar();
@@ -44,23 +45,23 @@ public class AutovermietungAnwendungssystem {
     private MenuItem mnItmCsvExport 		= new MenuItem("csv-Export");    
     //-------Ende Attribute der grafischen Oberflaeche-------
     
-    // speichert temporaer ein Objekt vom Typ Auto
-    private Auto auto;
-    
-    private AutovermietungView avView;
-    private AutosModel avModel;
-    
-    public AutovermietungAnwendungssystem(Stage primaryStage){
-    	Scene scene = new Scene(this.pane, 700, 340);
+    private AutovermietungControl avControl;
+	private AutosModel avModel;
+	
+	public AutovermietungView(AutovermietungControl avControl, AutosModel avModel,Stage primaryStage) {
+		super();
+		this.avControl = avControl;
+		this.avModel = avModel;
+		avModel.addObserver(this);
+		Scene scene = new Scene(this.pane, 700, 340);
     	primaryStage.setScene(scene);
     	primaryStage.setTitle("Verwaltung einer Autovermietung");
     	primaryStage.show();
-    	avModel.addObserver(this);
     	this.initKomponenten();
 		this.initListener();
-    }
-    
-    private void initKomponenten(){
+	}
+	
+	private void initKomponenten(){
        	// Labels
     	lblEingabe.setLayoutX(20);
     	lblEingabe.setLayoutY(40);
@@ -133,116 +134,50 @@ public class AutovermietungAnwendungssystem {
 	    btnEingabe.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-        	    nehmeAutoAuf();
+            	avControl.nehmeAutoAuf();
             }
 	    });
 	    btnAnzeige.setOnAction(new EventHandler<ActionEvent>() {
 	    	@Override
 	        public void handle(ActionEvent e) {
-	            zeigeAutosAn();
+	    		avControl.zeigeAutosAn();
 	        } 
    	    });
 	    mnItmCsvImport.setOnAction(new EventHandler<ActionEvent>() {
 	    	@Override
 	        public void handle(ActionEvent e) {
-	       	 	leseAusDatei("csv");
+	    		avControl.leseAusDatei("csv");
 	    	}
 	    });
 	    mnItmTxtImport.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override
 		    public void handle(ActionEvent e) {
-		     	leseAusDatei("txt");
+		    	avControl.leseAusDatei("txt");
 		    }
     	});
 	    mnItmCsvExport.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				schreibeAutoInCsvDatei();
+				avControl.schreibeAutoInCsvDatei();
 			}	
 	    });
     }
-    
-    private void nehmeAutoAuf(){
-    	try{ 
-    		this.auto = new Auto(
-    			txtKennzeichen.getText(), 
-   	            txtTyp.getText(),
-   	            txtModell.getText(),
-   	            Float.parseFloat(txtTagespreis.getText()),
-    		    txtVermietetVonBis.getText().split(";"));
-    		zeigeInformationsfensterAn("Das Auto wurde aufgenommen!");
-       	}
-       	catch(Exception exc){
-       		zeigeFehlermeldungsfensterAn(exc.getMessage());
-     	}
-    }
+	
+   void zeigeInformationsfensterAn(String meldung){
+   	new MeldungsfensterAnzeiger(AlertType.INFORMATION,
+   		"Information", meldung).zeigeMeldungsfensterAn();
+   }	
    
-    private void zeigeAutosAn(){
-    	if(this.auto != null){
-    		txtAnzeige.setText(
-    			this.auto.gibAutoZurueck(' '));
-    	}
-    	else{
-    		zeigeInformationsfensterAn("Bisher wurde kein Auto aufgenommen!");
-    	}
-    }    
-		  
-    private void leseAusDatei(String typ){
-    	try {
-      		if("csv".equals(typ)){
-      			BufferedReader ein = new BufferedReader(new FileReader("Auto.csv"));
-      			String[] zeile = ein.readLine().split(";");
-      			this.auto = new Auto(zeile[0], 
-      				zeile[1], 
-      				zeile[2], 
-      				Float.parseFloat(zeile[3]), 
-      				zeile[4].split("_"));
-      				ein.close();
-      	  			zeigeInformationsfensterAn(
-      	  	   			"Das Auto wurde gelesen!");
-      		}
-       		else{
-	   			zeigeInformationsfensterAn(
-	   				"Noch nicht implementiert!");
-	   		}
-		}
-		catch(IOException exc){
-			zeigeFehlermeldungsfensterAn(
-				"IOException beim Lesen!");
-		}
-		catch(Exception exc){
-			zeigeFehlermeldungsfensterAn(
-				"Unbekannter Fehler beim Lesen!");
-		}
-	}
-		
-	private void schreibeAutoInCsvDatei() {
-		try {
-			BufferedWriter aus 
-				= new BufferedWriter(new FileWriter("AutosAusgabe.csv", true));
-			aus.write(auto.gibAutoZurueck(';'));
-			aus.close();
-   			zeigeInformationsfensterAn(
-	   			"Die Autos wurden gespeichert!");
-		}	
-		catch(IOException exc){
-			zeigeFehlermeldungsfensterAn(
-				"IOException beim Speichern!");
-		}
-		catch(Exception exc){
-			zeigeFehlermeldungsfensterAn(
-				"Unbekannter Fehler beim Speichern!");
-		}
-	}
+   void zeigeFehlermeldungsfensterAn(String meldung){
+      	new MeldungsfensterAnzeiger(AlertType.ERROR,
+       	"Fehler", meldung).zeigeMeldungsfensterAn();
+   }
 
-    private void zeigeInformationsfensterAn(String meldung){
-    	new MeldungsfensterAnzeiger(AlertType.INFORMATION,
-    		"Information", meldung).zeigeMeldungsfensterAn();
-    }	
-    
-    void zeigeFehlermeldungsfensterAn(String meldung){
-       	new MeldungsfensterAnzeiger(AlertType.ERROR,
-        	"Fehler", meldung).zeigeMeldungsfensterAn();
-    }
+@Override
+public void update() {
+	avControl.zeigeAutosAn();
+	
+}
+
 
 }
