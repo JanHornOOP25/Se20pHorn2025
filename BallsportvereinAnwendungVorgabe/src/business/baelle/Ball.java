@@ -1,23 +1,22 @@
 package business.baelle;
 
-public class Ball {
+import business.Sportartikel;
+
+public class Ball extends Sportartikel{
 	
-	private int einkaufsdatum;
 	private String material;
 	private String sportart;
 	private String status;
 	private String nutzung;
-	private double preis;
 	
 	public Ball(int einkaufsdatum, String material, String sportart,
 		String status, String nutzung, double preis) 
 	 	throws Exception {
-		this.einkaufsdatum = einkaufsdatum;
+		super(einkaufsdatum, preis);
 		this.material = material;
 		this.sportart = sportart;
 		this.status = status;
 		this.nutzung = nutzung;
-		this.preis = preis;
 	}
 	 
 	public boolean ueberpruefeSportart(){
@@ -26,15 +25,7 @@ public class Ball {
 	    }
 	    else
 	    	return true;
-	}	
-	
-	public int getEinkaufsdatum() {
-		return einkaufsdatum;
-	}
-	
-	public void setEinkaufsdatum(int einkaufsdatum) {
-		this.einkaufsdatum = einkaufsdatum;
-	}
+	}		
 	
 	public String getMaterial() {
 		return material;
@@ -68,18 +59,11 @@ public class Ball {
 		this.nutzung = nutzung;
 	}
 	
-	public double getPreis() {
-		return preis;
-	}
-	
-	public void setPreis(double preis) {
-		this.preis = preis;
-	}
-	
+	@Override	
 	public String gibZurueck(char trenner) {
-		return (this.getEinkaufsdatum() + "") + trenner + this.getMaterial() + trenner
+		return (super.gibZurueck(trenner) + trenner + this.getMaterial() + trenner
 		+ this.getSportart() + trenner + this.getStatus() + trenner
-		+ this.getNutzung() + trenner + this.getPreis();
+		+ this.getNutzung());
 	}
 	
 }

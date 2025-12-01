@@ -2,8 +2,8 @@ package gui.sportartikel;
 
 
 
-import java.util.Observable;
-import java.util.Observer;
+//import java.util.Observable;
+//import java.util.Observer;
 
 import business.baelle.*;
 import javafx.event.ActionEvent;
@@ -16,7 +16,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import ownUtil.MeldungsfensterAnzeiger;
-//import ownUtil.Observer;
+import ownUtil.*;
 
 public class SportartikelView implements Observer{
 	
@@ -39,7 +39,7 @@ public class SportartikelView implements Observer{
     	stage.setScene(scene);
     	stage.setTitle("Anzeige von Sportartikeln");
     	stage.show();
-    	this,stage = stage;
+    	this.stage = stage;
     	this.sportartikelControl = sportartikelControl;
     	this.baelleModel = baelleModel;
     	this.baelleModel.addObserver(this);
@@ -78,8 +78,8 @@ public class SportartikelView implements Observer{
     }
    
     private void initListener() {
-  	    btnAnzeigeBaelle.setOnAction(
- 			new EventHandler<ActionEvent>() {
+    	/*
+  	    btnAnzeigeBaelle.setOnAction(new EventHandler<ActionEvent>() {
 	    		@Override
 	        	public void handle(ActionEvent e) {
 	            	zeigeBaelleAn();
@@ -89,15 +89,18 @@ public class SportartikelView implements Observer{
 			
 			@Override
 			public void handle(WindowEvent event) {
-				( SportartikelView.this.baelleModel).removeObserver();
+				( SportartikelView.this.baelleModel).removeObserver(SportartikelView.this);
 			}
 		});
+		*/
+    	btnAnzeigeBaelle.setOnAction(e ->zeigeBaelleAn());
+    	stage.setOnCloseRequest(e -> ( SportartikelView.this.baelleModel).removeObserver(SportartikelView.this));
     }
    
     public void zeigeBaelleAn(){
    		String text = "";
-   		for(int i = 0; i < baelleModel.holeBaelle().length; i++) {
-   		    text = text + baelleModel.holeBaelle()[i].gibZurueck('|') + "\n";
+   		for(int i = 0; i < baelleModel.getBaelle().getAnzahlSportartikel(); i++) {
+   		    text = text + baelleModel.getBaelle().getSportartikel(i).gibZurueck('|') + "\n";
    		}
    		txtAnzeigeBaelle.setText(text);
     }	
@@ -107,19 +110,20 @@ public class SportartikelView implements Observer{
  			"Information", meldung).zeigeMeldungsfensterAn();
     }
 
-/*
+  
 	@Override
 	public void update() {
 		zeigeBaelleAn();
 		
 	}
-*/
+
+    /*
 	@Override
 	public void update(Observable o, Object arg) {
 		if(o.getClass().getSimpleName().equals("BaelleModel")){ 
 			zeigeBaelleAn();}	
 		
 	}	
-    
+    */
 
 }

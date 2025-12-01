@@ -1,7 +1,7 @@
 package gui.baelle;
    
-import java.util.Observable;
-import java.util.Observer;
+//import java.util.Observable;
+//import java.util.Observer;
 
 import business.baelle.*;
 import javafx.event.*;
@@ -12,7 +12,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import ownUtil.MeldungsfensterAnzeiger;
-//import ownUtil.Observer;
+import ownUtil.Observer;
 
 public class BaelleView implements Observer {
 	  
@@ -106,6 +106,7 @@ public class BaelleView implements Observer {
    }
    
    private void initListener() {
+	   /*
 	    cmbBxEinkaufdatum.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
@@ -125,6 +126,10 @@ public class BaelleView implements Observer {
 	    		fuelleComboBoxEinkaufsdatum();
 	        } 
         });
+        */
+	   cmbBxEinkaufdatum.setOnAction(e ->zeigeBallAn());
+	   btnAenderungAufnehmen.setOnAction(e->zeigeInformationsfensterAn("Noch nicht implementiert!"));
+	   mnItmCsvImport.setOnAction(e -> {baelleControl.leseBaelleAusDatei();fuelleComboBoxEinkaufsdatum();});
    }
    
    private void zeigeBallAn() {
@@ -146,9 +151,9 @@ public class BaelleView implements Observer {
  
    public void fuelleComboBoxEinkaufsdatum() {
 	   cmbBxEinkaufdatum.getItems().clear();
-		for(int i = 0; i < baelleModel.getAnzahlBaelle(); i++) {
+		for(int i = 0; i < baelleModel.getBaelle().getAnzahlSportartikel(); i++) {
 			cmbBxEinkaufdatum.getItems().add(
-				baelleModel.holeBaelle()[i].getEinkaufsdatum() + "");
+					baelleModel.getBaelle().getSportartikel(i).getEinkaufsdatum() + "");
 		}  
 	}
     
@@ -161,18 +166,19 @@ public class BaelleView implements Observer {
 	   new MeldungsfensterAnzeiger(AlertType.ERROR,
 			fehlertyp + " Fehler", meldung).zeigeMeldungsfensterAn();
    }
- /* 
+  
    @Override
    public void update() {
 	   fuelleComboBoxEinkaufsdatum();
 	
    }
-   */
-
+   
+/*
    @Override
    public void update(Observable o, Object arg) {
 	   if(o.getClass().getSimpleName().equals("BaelleModel")){ 
 		   fuelleComboBoxEinkaufsdatum();
 	   }
    }
+   */
 }
