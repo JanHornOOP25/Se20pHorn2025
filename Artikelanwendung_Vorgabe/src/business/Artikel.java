@@ -38,6 +38,9 @@ public class Artikel {
 	
 	public double berechnePreisJeArtikel(int anzahlKaufArtikel)
 		throws IllegalArgumentException {
+		if (anzahlKaufArtikel<=0) {
+			throw new IllegalArgumentException("zewnig geakuft"); 
+		}
 		double ergebnisProz = 100;	
 		int[] anzArtikel = new int[]{0, 500, 1000};
 		int[] preisJeStueckProz = new int[]{100, 75, 60};

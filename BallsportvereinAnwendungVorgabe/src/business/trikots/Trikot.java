@@ -9,6 +9,9 @@ public class Trikot {
 	
 	public Trikot(int trikotnummer, int groesse, double preis, int einkaufsdatum) {
 		super();
+		if (trikotnummer<0) {
+			throw new IllegalArgumentException("Nummer darf nicht kleiner al 0 sein");
+		}
 		this.trikotnummer = trikotnummer;
 		this.groesse = groesse;
 		this.preis = preis;

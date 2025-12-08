@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import business.Artikel;
 
@@ -22,14 +23,20 @@ public class ConcreteCsvReaderProduct extends ReaderProduct {
 	}
 
 	@Override
-	public Artikel[] leseArtikel() throws IOException {
+	public ArrayList<Artikel> leseArtikel() throws IOException {
 		BufferedReader ein = new BufferedReader(new FileReader("Artikel.csv"));
-		Artikel[] artikel = new Artikel[100];
-		int anzahlArtikel = Integer.parseInt(ein.readLine());
+		ArrayList<Artikel> artikel = new ArrayList<Artikel>();
+		
 		String[] zeile = null;
+		/*
 		for (int i = 0; i < anzahlArtikel; i++) {
 			zeile = ein.readLine().split(";");
 			artikel[i] = new Artikel(Integer.parseInt(zeile[0]), zeile[1], Double.parseDouble(zeile[2]));
+		}
+		*/
+		while (ein.readLine()!=null) {
+			zeile = ein.readLine().split(";");
+			artikel.add(new Artikel(Integer.parseInt(zeile[0]), zeile[1], Double.parseDouble(zeile[2])));
 		}
 		ein.close();
 		return artikel ;

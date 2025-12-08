@@ -1,10 +1,11 @@
 package writers;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import business.Artikel;
 
 public abstract class WriterProduct {
-	public abstract void schreibeArtikel(int anzahlArtikel, Artikel[] artikel) throws IOException;
+	public abstract void schreibeArtikel(int anzahlArtikel, ArrayList<Artikel> artikels) throws IOException;
 
 }
