@@ -10,6 +10,9 @@ public class Auto {
     
     public Auto(String kennzeichen, String typ, String modell,
        	float tagespreis, String[] vermietetVonBis){
+    	if(vermietetVonBis==null) {
+    		throw new IllegalArgumentException("vermietetVonBis darf nicht null sein!");
+    	}
     	this.kennzeichen = kennzeichen;
       	this.typ = typ;
        	this.modell = modell;

@@ -1,6 +1,7 @@
 
 package gui.guiFahrzeuguebersicht;
 
+import business.Auto;
 import business.AutosModel;
 import javafx.event.*;
 import javafx.scene.Scene;
@@ -65,9 +66,22 @@ public class FahrzeuguebersichtView implements Observer {
 	}
 
 	public void zeigeAutosAn() {
+		/*
 		if (autosModel.getAuto() != null) {
 			txtAnzeigeAutos.setText(autosModel.getAuto().gibAutoZurueck(' '));
-		} else {
+		} 
+		*/
+		
+		if(this.autosModel.getAuto().size()>0) {
+			StringBuffer text = new StringBuffer(); 
+			for(Auto auto : this.autosModel.getAuto()  ) {
+				text.append(auto.gibAutoZurueck(' ')+"\n");
+		}
+			
+		
+		this.txtAnzeigeAutos.setText(text.toString());
+		}
+		else {
 			zeigeInformationsfensterAn("Bisher wurde kein Auto aufgenommen!");
 		}
 	}

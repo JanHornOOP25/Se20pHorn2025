@@ -155,12 +155,15 @@ public class AutovermietungView implements Observer {
 		    	avControl.leseAusDatei("txt");
 		    }
     	});
+	    /*
 	    mnItmCsvExport.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
 				avControl.schreibeAutoInCsvDatei();
 			}	
 	    });
+	    */
+	    mnItmCsvExport.setOnAction(e->{avControl.schreibeAutoInCsvDatei();});
     }
 	
    void zeigeInformationsfensterAn(String meldung){
@@ -179,5 +182,6 @@ public void update() {
 	
 }
 
+// test  BO-as-232, ford,transit,88,20251202_2051204,2051207_20251215
 
 }
