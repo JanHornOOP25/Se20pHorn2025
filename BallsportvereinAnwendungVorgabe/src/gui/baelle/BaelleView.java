@@ -12,6 +12,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import ownUtil.MeldungsfensterAnzeiger;
+import ownUtil.Observable;
 import ownUtil.Observer;
 
 public class BaelleView implements Observer {
@@ -168,8 +169,10 @@ public class BaelleView implements Observer {
    }
   
    @Override
-   public void update() {
+   public void update(Observable o) {
+	   if(o.getClass().getSimpleName().equals("BaelleModel")){ 
 	   fuelleComboBoxEinkaufsdatum();
+	   }
 	
    }
    

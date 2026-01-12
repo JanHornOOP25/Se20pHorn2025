@@ -1,6 +1,8 @@
 package business.trikots;
 
-public class Trikot {
+import business.Sportartikel;
+
+public class Trikot extends Sportartikel {
 	
 	private int trikotnummer;
 	private int groesse;
@@ -8,14 +10,23 @@ public class Trikot {
 	private int einkaufsdatum;
 	
 	public Trikot(int trikotnummer, int groesse, double preis, int einkaufsdatum) {
-		super();
+		super(einkaufsdatum ,preis);
 		if (trikotnummer<0) {
 			throw new IllegalArgumentException("Nummer darf nicht kleiner al 0 sein");
 		}
 		this.trikotnummer = trikotnummer;
 		this.groesse = groesse;
-		this.preis = preis;
-		this.einkaufsdatum = einkaufsdatum;
+		//this.preis = preis;
+		//this.einkaufsdatum = einkaufsdatum;
+	}
+	public Trikot(int trikotnummer,  double preis, int einkaufsdatum) {
+		super(einkaufsdatum ,preis);
+		if (trikotnummer<0) {
+			throw new IllegalArgumentException("Nummer darf nicht kleiner al 0 sein");
+		}
+		this.trikotnummer = trikotnummer;
+		//this.preis = preis;
+		//this.einkaufsdatum = einkaufsdatum;
 	}
 	
 	public boolean ueberpruefePreis(){
@@ -42,7 +53,7 @@ public class Trikot {
 	public void setGroesse(int groesse) {
 		this.groesse = groesse;
 	}
-
+	/*
 	public double getPreis() {
 		return preis;
 	}
@@ -58,7 +69,7 @@ public class Trikot {
 	public void setEinkaufsdatum(int einkaufsdatum) {
 		this.einkaufsdatum = einkaufsdatum;
 	}
-	
+	*/
 	public String gibZurueck(char trenner) {
 		return (this.getEinkaufsdatum() + "") + trenner 
 			+ this.getTrikotnummer() + trenner

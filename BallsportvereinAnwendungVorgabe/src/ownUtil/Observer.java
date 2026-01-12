@@ -1,6 +1,6 @@
 package ownUtil;
 
 public interface Observer {
-	public void update();
+	public void update(Observable o);
 
 }

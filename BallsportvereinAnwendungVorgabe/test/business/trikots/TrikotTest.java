@@ -25,9 +25,9 @@ class TrikotTest {
 		assertTrue(()->t1.getTrikotnummer()==9,"trikonummer ist richtig");
 	}
 	@Test
-	void Grösetest() {
+	void Groesetest() {
 		Trikot t1=new Trikot(9, 52, 50.00, 2508);
-		assertTrue(()->t1.getGroesse()==52,"Größe ist richtig");
+		assertTrue(()->t1.getGroesse()==52,"Grï¿½ï¿½e ist richtig");
 	}
 	@Test
 	void newillgelagumtTriko() {
