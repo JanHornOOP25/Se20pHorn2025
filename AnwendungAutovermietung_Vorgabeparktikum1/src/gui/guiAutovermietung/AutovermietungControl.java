@@ -6,8 +6,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import business.Auto;
-import business.AutosModel;
+import business.auto.*;
+
 import javafx.stage.Stage;
 
 public class AutovermietungControl {

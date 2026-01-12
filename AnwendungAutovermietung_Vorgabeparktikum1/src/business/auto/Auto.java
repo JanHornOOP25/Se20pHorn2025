@@ -1,4 +1,4 @@
-package business;
+package business.auto;
 
 public class Auto {
 	
